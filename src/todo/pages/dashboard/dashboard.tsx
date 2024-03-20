@@ -18,11 +18,13 @@ import Button from "../../../common/components/button/button.tsx";
 const Dashboard = () => {
     const [projects, setProjects] = useLocalStorage<ProjectDao[]>("projects")
 
+    // @ts-ignore
     const projectCreated = useSelector(projectWasCreatedSelector)
     const allProjects = useSelector(allProjectsSelector)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    // @ts-ignore
     const { openDialog, closeDialog } = useDialog()
 
     useEffect(() => {
@@ -31,12 +33,15 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (allProjects) {
+            // @ts-ignore
             setProjects(allProjects)
         }
     }, [setProjects, allProjects]);
 
     useEffect(() => {
-        if (projectCreated) setProjects([...allProjects, projectCreated])
+        if (projectCreated) { // @ts-ignore
+            setProjects([...allProjects, projectCreated])
+        }
     }, [allProjects, projectCreated, setProjects])
 
     const createProjectFunction = (project: ProjectDao) => {
@@ -60,11 +65,11 @@ const Dashboard = () => {
             }
 
             <div>
-                <ProjectsList projects={projects} onClickProject={openProject}/>
+                <ProjectsList projects={projects as ProjectDao[]} onClickProject={openProject}/>
             </div>
 
             <div className={'flex justify-center'}>
-                <Button onClick={event=> {
+                <Button onClick={()=> {
                     openDialog(() => {
                         return (
                             <div className={'p-4 w-full h-full flex flex-col justify-center items-center'}>

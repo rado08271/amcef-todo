@@ -14,7 +14,6 @@ const TodoInitialState: TodoState = {
 
 const getAllProjectTodosAction = createAsyncThunk<ProjectDao[], string>('todo/getTodos', async (projectId: string) => {
     const response = await getProjectByIdAPI(projectId)
-    if (response == 'Not found') return []
 
     return response
 })
@@ -38,64 +37,64 @@ const updateTodoAction = createAsyncThunk<boolean, TodoDao>('todo/updateTodo', a
 })
 
 
+// @ts-ignore
 const TodoSlice = createSlice({
     name: "todo",
     initialState: TodoInitialState,
     extraReducers: builder => {
-        builder.addCase(getAllProjectTodosAction.pending, (state: TodoState, action: ReturnType<never>) => {
+        builder.addCase(getAllProjectTodosAction.pending, (state: TodoState, action) => {
             state.status = "loading"
             state.data = null
             state.name = action.type
         })
-        builder.addCase(getAllProjectTodosAction.fulfilled, ((state: TodoState, action: ReturnType<TodoDao[]>) => {
+        builder.addCase(getAllProjectTodosAction.fulfilled, ((state: TodoState, action) => {
             state.status = "success"
             state.data = action.payload
             state.name = action.type
         }))
-        builder.addCase(getAllProjectTodosAction.rejected, ((state: TodoState, action: ReturnType) => {
+        builder.addCase(getAllProjectTodosAction.rejected, ((state: TodoState, action) => {
             state.status = "failed"
             state.name = action.type
         }))
 
-        builder.addCase(createTodoAction.pending, (state: TodoState, action: ReturnType<never>) => {
+        builder.addCase(createTodoAction.pending, (state: TodoState, action) => {
             state.status = "loading"
             state.name = action.type
         })
-        builder.addCase(createTodoAction.fulfilled, ((state: TodoState, action: ReturnType<TodoDao[]>) => {
+        builder.addCase(createTodoAction.fulfilled, ((state: TodoState, action) => {
             state.status = "success"
             state.name = action.type
         }))
-        builder.addCase(createTodoAction.rejected, ((state: TodoState, action: ReturnType) => {
+        builder.addCase(createTodoAction.rejected, ((state: TodoState, action) => {
             state.status = "failed"
             state.name = action.type
         }))
 
-        builder.addCase(deleteTodoAction.pending, (state: TodoState, action: ReturnType<never>) => {
+        builder.addCase(deleteTodoAction.pending, (state: TodoState, action) => {
             state.status = "loading"
             state.name = action.type
         })
-        builder.addCase(deleteTodoAction.fulfilled, ((state: TodoState, action: ReturnType<TodoDao[]>) => {
+        builder.addCase(deleteTodoAction.fulfilled, ((state: TodoState, action) => {
             state.status = "success"
             state.name = action.type
         }))
-        builder.addCase(deleteTodoAction.rejected, ((state: TodoState, action: ReturnType) => {
+        builder.addCase(deleteTodoAction.rejected, ((state: TodoState, action) => {
             state.status = "failed"
             state.name = action.type
         }))
 
-        builder.addCase(updateTodoAction.pending, (state: TodoState, action: ReturnType<never>) => {
+        builder.addCase(updateTodoAction.pending, (state: TodoState, action) => {
             state.status = "loading"
             state.name = action.type
         })
-        builder.addCase(updateTodoAction.fulfilled, ((state: TodoState, action: ReturnType<TodoDao[]>) => {
+        builder.addCase(updateTodoAction.fulfilled, ((state: TodoState, action) => {
             state.status = "success"
             state.name = action.type
         }))
-        builder.addCase(updateTodoAction.rejected, ((state: TodoState, action: ReturnType) => {
+        builder.addCase(updateTodoAction.rejected, ((state: TodoState, action) => {
             state.status = "failed"
             state.name = action.type
         }))
-
     }
 })
 

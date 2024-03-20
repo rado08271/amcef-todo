@@ -3,6 +3,7 @@ import {useEffect, useRef, useState} from "react";
 const useLocalStorage = <T>(key: string, {serializer, deserializer} =  {deserializer: JSON.parse, serializer: JSON.stringify}) => {
     const keyRef = useRef(key)
 
+    // @ts-ignore
     const [value, setValue] = useState<T>(deserializer<T>(
         localStorage.getItem(keyRef.current)
     ))

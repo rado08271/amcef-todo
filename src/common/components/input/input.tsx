@@ -11,7 +11,7 @@ type Props = {
     defaultValue?: string
     onValueChange?: (value: string) => void
 }
-const Input = ({register = () => {}, id, label, placeholder, type = 'text', required = false, disabled, defaultValue, onValueChange}: Props) => {
+const Input = ({register, id, label, placeholder, type = 'text', required = false, disabled, defaultValue, onValueChange}: Props) => {
 
     const handleType = () => {
         switch (type) {

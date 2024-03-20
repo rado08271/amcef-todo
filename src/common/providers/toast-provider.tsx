@@ -1,6 +1,7 @@
 import React, {createContext, PropsWithChildren, useState} from "react";
 import Toast from "../components/toast/toast.tsx";
 
+// @ts-ignore
 export const ToastContext = createContext()
 
 const ToastProvider = ({children}: PropsWithChildren) => {

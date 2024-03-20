@@ -1,7 +1,7 @@
 import {TodoDao} from "../data/todo.ts";
 
 const BASE_PATH = import.meta.env.VITE_BASE_PATH
-export const getProjectByIdAPI = async (projectId: string, pageNumber?: number = 0): Promise<TodoDao[]> => {
+export const getProjectByIdAPI = async (projectId: string): Promise<TodoDao[]> => {
     const url = new URL(`${BASE_PATH}/todos`)
     url.searchParams.append('projectId', projectId)
 
@@ -9,8 +9,10 @@ export const getProjectByIdAPI = async (projectId: string, pageNumber?: number =
         method: "GET",
         headers: {'content-type':'application/json'},
     })
+    const responseJson = await response.json()
+    if (responseJson === 'Not found') return []
 
-    return await response.json<TodoDao[]>()
+    return responseJson
 }
 
 export const createTodoAPI = async (todoDao: TodoDao): Promise<boolean> => {

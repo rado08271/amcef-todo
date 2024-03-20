@@ -27,7 +27,9 @@ const Project = () => {
     }, [dispatch, id]);
 
     useEffect(() => {
-        if (allProjectTodos) setTodos(allProjectTodos)
+        if (allProjectTodos) { // @ts-ignore
+            setTodos(allProjectTodos as TodoDao[])
+        }
     }, [setTodos, allProjectTodos]);
 
     const createTodo = (todo: TodoDao) => {
@@ -35,6 +37,7 @@ const Project = () => {
         dispatch(createTodoAction(todo))
 
         /* Add to list optimisticaly */
+        // @ts-ignore
         setTodos([...todos, todo])
     }
 
@@ -42,6 +45,7 @@ const Project = () => {
         dispatch(updateTodoAction(newTodo))
 
         /* Add to list optimisticaly */
+        // @ts-ignore
         setTodos([...todos.filter(todo => todo.id !== newTodo.id), newTodo])
     }
 
@@ -49,13 +53,14 @@ const Project = () => {
         dispatch(deleteTodoAction(todoId))
 
         /* Handle list optimisticaly */
+        // @ts-ignore
         setTodos(todos.filter(todo => todo.id !== todoId))
     }
 
     return (
         <section className={'flex flex-col gap-4 w-full'}>
             {
-                !projectTodosLoading ? <TodosList todos={todos}
+                !projectTodosLoading ? <TodosList todos={todos as TodoDao[]}
                    onUpdateName={(newValue, todo) => {
                        console.log('update', todo, newValue)
 

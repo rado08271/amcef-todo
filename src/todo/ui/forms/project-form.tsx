@@ -23,7 +23,6 @@ const ProjectForm = ({onProjectSubmit}: Props) => {
             name: projectForm.name,
             searchString: projectForm.name.toLowerCase().trim().replace(" ", ''),
             createdDate: new Date(),
-            todoItems: []
         }
 
         onProjectSubmit(project)

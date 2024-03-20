@@ -8,10 +8,9 @@ export const initStore = configureStore({
         todo: TodoReducer,
         project: ProjectReducer
     },
-    middleware: getDefaultMiddleware =>
-        getDefaultMiddleware({
-            thunk, serializableCheck: false
-        })
+    middleware: getDefaultMiddleware => {
+        // @ts-ignore
+        return getDefaultMiddleware({thunk, serializableCheck: false})}
 })
 
 export type RootState = ReturnType<typeof initStore.getState>

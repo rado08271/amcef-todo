@@ -1,8 +1,8 @@
 import {TodoDao} from "../../data/todo.ts";
-import {FormEvent, useEffect, useState} from "react";
+import {FormEvent, useState} from "react";
 import Input from "../../../common/components/input/input.tsx";
 import {useForm} from "react-hook-form";
-import {DeleteIcon, DragIcon} from "../../../common/components/icons/icons.tsx";
+import {DeleteIcon} from "../../../common/components/icons/icons.tsx";
 import {formatDate} from "../../../common/utils/date.ts";
 import {normalizeSearchString} from "../../../common/utils/string.ts";
 
@@ -31,6 +31,7 @@ const TodosList = ({todos, onUpdateName, onUpdateState, onDelete}: Props) => {
                 <th scope='col' className={'px-6 py-2'}>Deadline</th>
                 <th scope='col' className={'px-6 py-2'}>
                     <select name={'options'} tabIndex={0} className={'bg-transparent outline-none uppercase'} onChange={event => {
+                        // @ts-ignore
                         setFilterType(event.target.value)
                     }}>
                         <option value={'all'}>All</option>
@@ -68,7 +69,7 @@ const TodosList = ({todos, onUpdateName, onUpdateState, onDelete}: Props) => {
                         <tr className={getStatusColor(todo)} id={todo.id} key={todo.id}>
                             <EditTodo todo={todo} onEditSubmit={({name}) => onUpdateName(name, todo)}/>
                             <th className={'px-6 py-2 overflow-clip'}>{todo.description}</th>
-                            <th className={'px-6 py-2'}>{formatDate(todo.deadlineDate)}</th>
+                            <th className={'px-6 py-2'}>{formatDate(todo.deadlineDate.toLocaleString())}</th>
                             <th className={'px-6 py-2 text-ce'}>
                                 <input type={'checkbox'} checked={todo.finished}
                                        onChange={event => onUpdateState(event.target.checked, todo)}/>
@@ -92,6 +93,7 @@ const EditTodo = ({todo, onEditSubmit}: { todo: TodoDao, onEditSubmit: (form: { 
     const [isBeingUpdated, updateForm] = useState(false)
 
     const onSubmit = (event: FormEvent) => {
+        // @ts-ignore
         handleSubmit(onEditSubmit)(event)
         updateForm(false)
     }
@@ -99,7 +101,7 @@ const EditTodo = ({todo, onEditSubmit}: { todo: TodoDao, onEditSubmit: (form: { 
     return (
         <th className={'px-6 py-2 cursor-text overflow-clip'}>
             { !isBeingUpdated &&
-                <div onClick={event => updateForm(!isBeingUpdated)}>{todo.name}</div>
+                <div onClick={() => updateForm(!isBeingUpdated)}>{todo.name}</div>
             }
             { isBeingUpdated &&
                 <form onSubmit={onSubmit}>

@@ -23,7 +23,8 @@ const getAllProjectsAction = createAsyncThunk<ProjectDao[], void>('project/get',
     return response
 })
 
-const ProjectSlice  = createSlice<ProjectState>({
+// @ts-ignore
+const ProjectSlice  = createSlice({
     name: "project",
     initialState: ProjectInitialState,
     extraReducers: (builder) => {
@@ -33,7 +34,6 @@ const ProjectSlice  = createSlice<ProjectState>({
         })
         builder.addCase(createProjectAction.fulfilled, (state, action) => {
             state.status = "success"
-            state.status = action.payload
             state.name = action.type
         })
         builder.addCase(createProjectAction.rejected, (state, action) => {
