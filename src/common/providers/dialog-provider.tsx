@@ -1,10 +1,10 @@
-import {Component, createContext, PropsWithChildren, ReactNode, useMemo, useRef, useState} from "react";
-import {createReducer} from "@reduxjs/toolkit";
-import {string} from "zod";
+import {createContext, PropsWithChildren, ReactNode, useRef, useState} from "react";
 import Button from "../components/button/button.tsx";
 
-// @ts-ignore
-export const DialogContext = createContext()
+export const DialogContext = createContext({
+    openDialog: (component: ReactNode) => {component},
+    closeDialog: () => {}
+})
 
 const DialogProvider = ({children}: PropsWithChildren) => {
     const [isOpened, setIsOpened] = useState(false)
@@ -20,7 +20,6 @@ const DialogProvider = ({children}: PropsWithChildren) => {
         setIsOpened(false)
     }
 
-    // @ts-ignore
     return (
         <DialogContext.Provider value={{openDialog, closeDialog}}>
             { /* Unmount when not necessary */ }

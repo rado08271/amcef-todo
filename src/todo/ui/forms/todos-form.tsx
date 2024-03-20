@@ -22,7 +22,6 @@ type TodoFormDao = z.infer<typeof TodoFormScheme>
 
 
 const TodosForm = ({onTodoSubmit, loading}: Props) => {
-    // @ts-ignore
     const {addToast} = useToast()
 
     const { register, handleSubmit, formState: {errors} } = useForm({
@@ -41,7 +40,6 @@ const TodosForm = ({onTodoSubmit, loading}: Props) => {
     }, [errors])
 
     const createTodo = (todoForm: TodoFormDao) => {
-        // @ts-ignore
         const todo: TodoDao = {
             name: todoForm.name,
             description: todoForm.description,
@@ -54,7 +52,6 @@ const TodosForm = ({onTodoSubmit, loading}: Props) => {
         onTodoSubmit(todo)
     }
 
-    // @ts-ignore
     return (
         <section>
             <form className={'w-full flex gap-2'} onSubmit={handleSubmit(createTodo)}>

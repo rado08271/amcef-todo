@@ -27,8 +27,9 @@ const Project = () => {
     }, [dispatch, id]);
 
     useEffect(() => {
-        if (allProjectTodos) { // @ts-ignore
-            setTodos(allProjectTodos as TodoDao[])
+        if (allProjectTodos) {
+            // @ts-expect-error will be handled as error due to types infering
+            setTodos<TodoDao[]>(allProjectTodos as TodoDao[])
         }
     }, [setTodos, allProjectTodos]);
 
@@ -37,7 +38,7 @@ const Project = () => {
         dispatch(createTodoAction(todo))
 
         /* Add to list optimisticaly */
-        // @ts-ignore
+        // @ts-expect-error will be handled as error due to types infering
         setTodos([...todos, todo])
     }
 
@@ -45,7 +46,7 @@ const Project = () => {
         dispatch(updateTodoAction(newTodo))
 
         /* Add to list optimisticaly */
-        // @ts-ignore
+        // @ts-expect-error will be handled as error due to types infering
         setTodos([...todos.filter(todo => todo.id !== newTodo.id), newTodo])
     }
 
@@ -53,7 +54,7 @@ const Project = () => {
         dispatch(deleteTodoAction(todoId))
 
         /* Handle list optimisticaly */
-        // @ts-ignore
+        // @ts-expect-error will be handled as error due to types infering
         setTodos(todos.filter(todo => todo.id !== todoId))
     }
 

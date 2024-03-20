@@ -9,8 +9,6 @@ import {initStore} from "./common/context/store.ts";
 import DialogProvider from "./common/providers/dialog-provider.tsx";
 import ToastProvider from "./common/providers/toast-provider.tsx";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
       <DialogProvider>

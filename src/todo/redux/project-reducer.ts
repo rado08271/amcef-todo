@@ -23,10 +23,10 @@ const getAllProjectsAction = createAsyncThunk<ProjectDao[], void>('project/get',
     return response
 })
 
-// @ts-ignore
 const ProjectSlice  = createSlice({
     name: "project",
     initialState: ProjectInitialState,
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(createProjectAction.pending, (state, action) => {
             state.status = "loading"
@@ -58,10 +58,11 @@ const ProjectSlice  = createSlice({
     }
 })
 
-const projectWasCreatedSelector = (state: ProjectState) => state.status === 'success'
-const allProjectsSelector = ({project}: { project: ProjectState }) => {
-    return project.data
-}
+const projectWasCreatedSelector = ({project}: {project: ProjectState }) =>
+    project.name?.startsWith('project/create/') && project.status === 'success'
+
+const allProjectsSelector = ({project}: { project: ProjectState }) => project.data
+
 
 export default ProjectSlice.reducer
 

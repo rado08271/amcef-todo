@@ -1,8 +1,9 @@
-import React, {createContext, PropsWithChildren, useState} from "react";
+import {createContext, PropsWithChildren, useState} from "react";
 import Toast from "../components/toast/toast.tsx";
 
-// @ts-ignore
-export const ToastContext = createContext()
+export const ToastContext = createContext({
+    addToast: (value: string) => {value}
+})
 
 const ToastProvider = ({children}: PropsWithChildren) => {
     const [toast, setToast] = useState<string | null>(null)

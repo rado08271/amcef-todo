@@ -10,7 +10,7 @@ export const createProjectAPI = async (projectDao: ProjectDao): Promise<boolean>
         body: JSON.stringify(projectDao)
     })
 
-    return true
+    return response.ok
 }
 
 export const getProjectsAPI = async (): Promise<ProjectDao[]> => {

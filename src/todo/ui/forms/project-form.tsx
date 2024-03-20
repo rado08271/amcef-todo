@@ -19,7 +19,6 @@ const ProjectForm = ({onProjectSubmit}: Props) => {
 
     const createProject = (projectForm: ProjectFormDao) => {
         const project: ProjectDao = {
-            id: '11',
             name: projectForm.name,
             searchString: projectForm.name.toLowerCase().trim().replace(" ", ''),
             createdDate: new Date(),

@@ -37,10 +37,10 @@ const updateTodoAction = createAsyncThunk<boolean, TodoDao>('todo/updateTodo', a
 })
 
 
-// @ts-ignore
 const TodoSlice = createSlice({
     name: "todo",
     initialState: TodoInitialState,
+    reducers: {},
     extraReducers: builder => {
         builder.addCase(getAllProjectTodosAction.pending, (state: TodoState, action) => {
             state.status = "loading"

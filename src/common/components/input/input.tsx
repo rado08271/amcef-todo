@@ -28,7 +28,7 @@ const Input = ({register, id, label, placeholder, type = 'text', required = fals
             {/* onChange placed before register so it's overwritten by spreading register */}
             <input
                 onChange={event => onValueChange(event.target.value)}
-                {...register(id)}
+                {...(register ? register(id) : {})}
                 aria-required={required} required={required}
                 id={id} type={handleType()}
                 placeholder={placeholder}

@@ -12,9 +12,11 @@ type Props = {
     onUpdateState: (newState: boolean, todo: TodoDao) => void
     onDelete: (todoId: string) => void
 }
+
+type FilterOptions = 'all' | 'finished' | 'active'
 const TodosList = ({todos, onUpdateName, onUpdateState, onDelete}: Props) => {
     const [searchQ, setSearchQ] = useState('')
-    const [filter, setFilterType] = useState<'all' | 'finished' | 'active'>('all')
+    const [filter, setFilterType] = useState<FilterOptions>('all')
 
     const getStatusColor = (todo: TodoDao) => {
         if (todo.finished) return 'bg-green-100'
@@ -31,8 +33,7 @@ const TodosList = ({todos, onUpdateName, onUpdateState, onDelete}: Props) => {
                 <th scope='col' className={'px-6 py-2'}>Deadline</th>
                 <th scope='col' className={'px-6 py-2'}>
                     <select name={'options'} tabIndex={0} className={'bg-transparent outline-none uppercase'} onChange={event => {
-                        // @ts-ignore
-                        setFilterType(event.target.value)
+                        setFilterType(event.target.value as FilterOptions)
                     }}>
                         <option value={'all'}>All</option>
                         <option value={'finished'}>Finished</option>

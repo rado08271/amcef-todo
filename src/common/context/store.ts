@@ -9,8 +9,7 @@ export const initStore = configureStore({
         project: ProjectReducer
     },
     middleware: getDefaultMiddleware => {
-        // @ts-ignore
-        return getDefaultMiddleware({thunk, serializableCheck: false})}
+        return getDefaultMiddleware({thunk: {extraArgument: thunk}, serializableCheck: false})}
 })
 
 export type RootState = ReturnType<typeof initStore.getState>

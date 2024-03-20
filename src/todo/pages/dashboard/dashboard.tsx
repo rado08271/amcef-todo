@@ -6,8 +6,7 @@ import useSelector from "../../../common/hooks/use-selector.ts";
 import {
     allProjectsSelector,
     createProjectAction,
-    getAllProjectsAction,
-    projectWasCreatedSelector
+    getAllProjectsAction
 } from "../../redux/project-reducer.ts";
 import {ProjectDao} from "../../data/project.ts";
 import useDispatch from "../../../common/hooks/use-dispatch.ts";
@@ -18,13 +17,10 @@ import Button from "../../../common/components/button/button.tsx";
 const Dashboard = () => {
     const [projects, setProjects] = useLocalStorage<ProjectDao[]>("projects")
 
-    // @ts-ignore
-    const projectCreated = useSelector(projectWasCreatedSelector)
     const allProjects = useSelector(allProjectsSelector)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    // @ts-ignore
     const { openDialog, closeDialog } = useDialog()
 
     useEffect(() => {
@@ -33,19 +29,18 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (allProjects) {
-            // @ts-ignore
+            // @ts-expect-error will be handled as error due to types infering
             setProjects(allProjects)
         }
     }, [setProjects, allProjects]);
 
-    useEffect(() => {
-        if (projectCreated) { // @ts-ignore
-            setProjects([...allProjects, projectCreated])
-        }
-    }, [allProjects, projectCreated, setProjects])
-
     const createProjectFunction = (project: ProjectDao) => {
         dispatch(createProjectAction(project))
+
+        /* Update optimistically */
+        // @ts-expect-error will be handled as error due to types infering
+        setProjects([...allProjects, project])
+        closeDialog()
     }
 
     const openProject = (projectId: string) => {
@@ -54,8 +49,6 @@ const Dashboard = () => {
 
     return (
         <section className={'flex flex-col w-full m-8'}>
-            {/*Welcome {currentUser}, these are your projects*/}
-
             {projects != null && projects.length === 0 &&
                 <div className={'flex justify-center'}>
                     <div className={'text-center text-sm uppercase py-2 px-6 rounded-xl bg-slate-200'}>
@@ -70,14 +63,14 @@ const Dashboard = () => {
 
             <div className={'flex justify-center'}>
                 <Button onClick={()=> {
-                    openDialog(() => {
-                        return (
+                    openDialog(
+                        (
                             <div className={'p-4 w-full h-full flex flex-col justify-center items-center'}>
                                 <h1 className={'text-center'}>What is the name of your new project?</h1>
                                 <ProjectForm onProjectSubmit={createProjectFunction}></ProjectForm>
                             </div>
                         )
-                    })
+                    )
                 }
                 } type={"submit"}>+
                 </Button>
